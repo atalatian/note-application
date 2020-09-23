@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'Note_App/styles.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'Note_App/script.js' %}"></script>
+</head>
+<body>
+    {% if notes %}
+        <div class="container">
+            <div id="accordion">
+                {% for note in notes %}
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#collapse{{ forloop.counter }}">
+                                {{ note.title }}
+                            </a>
+                            &nbsp;&nbsp;<span class="badge badge-primary EDIT" style="cursor: pointer">Edit<p style="display: none">{{ note.pk }}</p></span>
+                            &nbsp;&nbsp;<span class="badge badge-danger DELETE" style="cursor: pointer">Delete<p style="display: none">{{ note.pk }}</p></span>
+                        </div>
+                        <div id="collapse{{ forloop.counter }}" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                {{ note.note }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="btn btn-primary btn-block ADD">ADD</button>
+        </div>
+    {% else %}
+        <div class="container">
+            <div class="jumbotron">
+                <h1>There is no Note!</h1>
+            </div>
+            <button type="button" class="btn btn-primary btn-block ADD">ADD</button>
+        </div>
+    {% endif %}
+</body>
+</html>
